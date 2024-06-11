@@ -1,28 +1,13 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Instagram/IGListKit/main/Resources/logo-animation.gif" width=400 />
+  <img src="https://raw.githubusercontent.com/Instagram/IGListKit/main/Resources/logo.png" width=450 />
 </p>
 
 <p align="center">
-    <a href="https://github.com/Instagram/IGListKit/actions/workflows/CI.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/Instagram/IGListKit/CI.yml"
-             alt="Build Status">
-    </a>
-    <a href="https://coveralls.io/github/Instagram/IGListKit?branch=main">
-      <img src="https://coveralls.io/repos/github/Instagram/IGListKit/badge.svg?branch=main"
-           alt="Coverage Status" />
-    </a>
-    <a href="https://cocoapods.org/pods/IGListKit">
-        <img src="https://img.shields.io/cocoapods/v/IGListKit.svg?style=flat"
-             alt="Pods Version">
-    </a>
-    <a href="https://instagram.github.io/IGListKit/">
-        <img src="https://img.shields.io/cocoapods/p/IGListKit.svg?style=flat"
-             alt="Platforms">
-    </a>
-    <a href="https://github.com/Carthage/Carthage">
-        <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
-             alt="Carthage Compatible">
-    </a>
+  <a href="https://github.com/Instagram/IGListKit/actions/workflows/CI.yml"><img src="https://img.shields.io/github/actions/workflow/status/Instagram/IGListKit/CI.yml" alt="Build Status"></a>
+  <a href="https://coveralls.io/github/Instagram/IGListKit?branch=main"><img src="https://coveralls.io/repos/github/Instagram/IGListKit/badge.svg?branch=main" alt="Coverage Status" /></a>
+  <a href="https://cocoapods.org/pods/IGListKit"><img src="https://img.shields.io/cocoapods/v/IGListKit.svg?style=flat" alt="Pods Version"></a>
+  <a href="https://instagram.github.io/IGListKit/"><img src="https://img.shields.io/cocoapods/p/IGListKit.svg?style=flat" alt="Platforms"></a>
+  <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat" alt="Carthage Compatible"></a>
 </p>
 
 ----------------
@@ -62,7 +47,7 @@
 推荐使用[CocoaPods](https://cocoapods.org)来进行安装，只需添加如下语句到你的`Podfile`文件中:
 
 ```ruby
-pod 'IGListKit', '~> 4.0.0'
+pod 'IGListKit', '~> 5.0.0'
 ```
 
 ### Carthage
@@ -70,7 +55,7 @@ pod 'IGListKit', '~> 4.0.0'
 对于[Carthage](https://github.com/Carthage/Carthage), 添加如下到`Cartfile`文件中:
 
 ```ogdl
-github "Instagram/IGListKit" ~> 3.0
+github "Instagram/IGListKit" ~> 5.0.0
 ```
 
 > 对于高级用法, 查阅 [安装指南](https://instagram.github.io/IGListKit/installation.html)。
