@@ -779,8 +779,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[] 
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id"]];
     NSArray<IGSectionObject *> *to = @[[IGSectionObject sectionWithObjects:@[@2] identifier:@"id"]];
     self.dataSource.sections = from;
@@ -1039,8 +1038,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]
-                                                                                            moveIndexPaths:@[] 
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id"]];
     // Update the items
     NSArray<IGSectionObject *> *to = @[[IGSectionObject sectionWithObjects:@[@2] identifier:@"id"]];
@@ -1075,8 +1073,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[]
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id"]];
     // more items in the section
     NSArray<IGSectionObject *> *to = @[[IGSectionObject sectionWithObjects:@[@1, @2] identifier:@"id"]];
@@ -1112,8 +1109,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[]
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id1"],
                                          [IGSectionObject sectionWithObjects:@[@2] identifier:@"id2"]];
     // move section, and also update the item for "id2"
@@ -1155,8 +1151,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[]
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1, @2, @3] identifier:@"id1"],
                                          [IGSectionObject sectionWithObjects:@[@2] identifier:@"id2"]];
     // move section, and also update the item for "id2"
@@ -1199,8 +1194,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[]
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id1"],
                                          [IGSectionObject sectionWithObjects:@[@2] identifier:@"id2"],
                                          [IGSectionObject sectionWithObjects:@[@3] identifier:@"id3"]];
@@ -1243,8 +1237,7 @@
                                                                                           insertIndexPaths:@[]
                                                                                           deleteIndexPaths:@[]
                                                                                           updateIndexPaths:@[]
-                                                                                            moveIndexPaths:@[]
-                                                                                     enableNetItemCountFix:NO];
+                                                                                            moveIndexPaths:@[]];
     NSArray<IGSectionObject *> *from = @[[IGSectionObject sectionWithObjects:@[@1] identifier:@"id1"]];
     NSArray<IGSectionObject *> *to = @[[IGSectionObject sectionWithObjects:@[@2] identifier:@"id1"],
                                        [IGSectionObject sectionWithObjects:@[@22] identifier:@"id2"]];

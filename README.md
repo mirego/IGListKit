@@ -35,7 +35,7 @@ We use the open source version `main` branch in the Instagram app.
 
 ## Requirements
 
-- Xcode 11.0+
+- Swift 5.1+
 - iOS 11.0+
 - tvOS 11.0+
 - macOS 10.13+ *(diffing algorithm components only)*

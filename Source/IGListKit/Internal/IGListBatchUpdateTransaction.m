@@ -140,7 +140,7 @@ typedef NS_ENUM (NSInteger, IGListBatchUpdateTransactionMode) {
             [self _bail];
         } else if (diffResult.changeCount > 100 && self.config.allowsReloadingOnTooManyUpdates) {
             [self _reload];
-        } else if (self.sectionData && [self.collectionView numberOfSections] != self.sectionData.fromObjects.count) {
+        } else if (self.sectionData && [self.collectionView numberOfSections] != (NSInteger)self.sectionData.fromObjects.count) {
             // If data is nil, there are no section updates.
             IGWarnAssert(@"The UICollectionView's section count (%li) didn't match the IGListAdapter's count (%li), so we can't performBatchUpdates. Falling back to reloadData.",
                          (long)[self.collectionView numberOfSections],
@@ -270,7 +270,6 @@ willPerformBatchUpdatesWithCollectionView:self.collectionView
 }
 
 - (void)_applyCollectioViewUpdates:(IGListIndexSetResult *)diffResult {
-    const BOOL enableNetItemCountFix = IGListExperimentEnabled(self.config.experiments, IGListExperimentEnableNetItemCountFix);
     if (self.config.singleItemSectionUpdates) {
         [self.collectionView deleteSections:diffResult.deletes];
         [self.collectionView insertSections:diffResult.inserts];
@@ -286,8 +285,7 @@ willPerformBatchUpdatesWithCollectionView:self.collectionView
                                             insertIndexPaths:@[]
                                             deleteIndexPaths:@[]
                                             updateIndexPaths:@[]
-                                            moveIndexPaths:@[]
-                                            enableNetItemCountFix:enableNetItemCountFix];
+                                            moveIndexPaths:@[]];
     } else {
         self.actualCollectionViewUpdates = IGListApplyUpdatesToCollectionView(self.collectionView,
                                                                               diffResult,
@@ -298,8 +296,7 @@ willPerformBatchUpdatesWithCollectionView:self.collectionView
                                                                               self.inUpdateItemCollector.itemMoves,
                                                                               self.sectionData.fromObjects ?: @[],
                                                                               self.config.sectionMovesAsDeletesInserts,
-                                                                              self.config.preferItemReloadsForSectionReloads,
-                                                                              enableNetItemCountFix);
+                                                                              self.config.preferItemReloadsForSectionReloads);
     }
 }
 
@@ -339,11 +336,6 @@ willPerformBatchUpdatesWithCollectionView:self.collectionView
 - (void)_bail {
     [self.delegate listAdapterUpdater:self.updater didFinishWithoutUpdatesWithCollectionView:self.collectionView];
     [self _executeCompletionAsFinished:NO];
-}
-
-- (void)_finishWithoutUpdate {
-    [self.delegate listAdapterUpdater:self.updater didFinishWithoutUpdatesWithCollectionView:self.collectionView];
-    [self _executeCompletionAsFinished:YES];
 }
 
 #pragma mark - Cancel

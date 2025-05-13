@@ -15,6 +15,7 @@
 #import "IGListAdapterInternal.h"
 #import "IGListSectionController.h"
 #import "IGListSectionControllerInternal.h"
+#import "IGListUpdatingDelegate.h"
 
 #import "IGListAdapterInternal.h"
 
@@ -43,26 +44,32 @@
     [performanceDelegate listAdapterWillCallDequeueCell:self];
 
     IGListSectionController *sectionController = [self sectionControllerForSection:indexPath.section];
+    IGAssert(sectionController != nil, @"Section controller nil for section %d", (int)indexPath.section);
+    IGAssert(sectionController.collectionContext != nil, @"sectionController.collectionContext nil for section %d", (int)indexPath.section);
 
 #if IG_ASSERTIONS_ENABLED
     if (!_dequeuedCells) {
         _dequeuedCells = [NSMutableSet new];
     }
 #endif
-    
+
     // flag that a cell is being dequeued in case it tries to access a cell in the process
     _isDequeuingCell = YES;
     UICollectionViewCell *cell = [sectionController cellForItemAtIndex:indexPath.item];
     _isDequeuingCell = NO;
 
-    IGAssert(cell != nil, @"Returned a nil cell at indexPath <%@> from section controller: <%@>", indexPath, sectionController);
+    IGAssert(cell != nil, @"Returned a nil cell at indexPath <%@> from section controller: <%@>, dataSource: <%@>", indexPath, sectionController, self.dataSource.class);
     if (cell) {
         IGAssert(cell.reuseIdentifier != nil, @"Returned a cell without a reuseIdentifier at indexPath <%@> from section controller: <%@>", indexPath, sectionController);
-        
+
         if (_dequeuedCells) {
             // This will cause a crash in iOS 18
             IGAssert([_dequeuedCells containsObject:cell], @"Returned a cell (%@) that was not dequeued at indexPath %@ from section controller %@", NSStringFromClass([cell class]), indexPath, sectionController);
         }
+    }
+
+    if (cell == nil) {
+        [self.updater willCrashWithCollectionView:collectionView sectionControllerClass:sectionController.class];
     }
 
     [_dequeuedCells removeAllObjects];
@@ -77,7 +84,7 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     IGListSectionController *sectionController = [self sectionControllerForSection:indexPath.section];
     id <IGListSupplementaryViewSource> supplementarySource = [sectionController supplementaryViewSource];
-    
+
 #if IG_ASSERTIONS_ENABLED
     if (!_dequeuedSupplementaryViews) {
         _dequeuedSupplementaryViews = [NSMutableSet new];
@@ -90,7 +97,7 @@
     _isDequeuingSupplementaryView = NO;
 
     IGAssert(view != nil, @"Returned a nil supplementary view at indexPath <%@> from section controller: <%@>, supplementary source: <%@>", indexPath, sectionController, supplementarySource);
-    
+
     if (view && _dequeuedSupplementaryViews) {
         // This will cause a crash in iOS 18
         IGAssert([_dequeuedSupplementaryViews containsObject:view], @"Returned a supplementary-view (%@) that was not dequeued at indexPath %@ from supplementary source %@", NSStringFromClass([view class]), indexPath, supplementarySource);
@@ -285,6 +292,22 @@
 
     IGListSectionController * sectionController = [self sectionControllerForSection:indexPath.section];
     [sectionController didUnhighlightItemAtIndex:indexPath.item];
+}
+
+- (NSIndexPath *)indexPathForPreferredFocusedViewInCollectionView:(UICollectionView *)collectionView {
+    // In case the delegate responds, it should take priority
+    id<UICollectionViewDelegate> collectionViewDelegate = self.collectionViewDelegate;
+    if ([collectionViewDelegate respondsToSelector:@selector(indexPathForPreferredFocusedViewInCollectionView:)]) {
+        return [collectionViewDelegate indexPathForPreferredFocusedViewInCollectionView:collectionView];
+    }
+
+    if (IGListExperimentEnabled(self.experiments, IGListExperimentFixPreferredFocusedView)) {
+        // The default implementation of `-[UICollectionView preferredFocusedView]` can create/dequeue off-screen
+        // cells, which causes perf issues and bugs.
+        return [[collectionView indexPathsForVisibleItems] firstObject];
+    }
+
+    return nil;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
